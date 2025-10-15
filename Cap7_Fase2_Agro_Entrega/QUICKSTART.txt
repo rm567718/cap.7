@@ -1,0 +1,34 @@
+============================
+QUICKSTART — Fase 2 | Cap. 7
+============================
+
+Requisitos:
+  • R (com Rscript no PATH) — para rodar análises e relatórios
+  • Python 3.8+ (opcional) — para CLI, criação de base e integração
+  • pip install pandas openpyxl numpy  (se for usar CSV→XLSX/geração de base)
+
+Opção A — Arquivo único R (entrega):
+  Rscript ENTREGA_Fase2_Cap7_Raimunda_Nayara_567718.R
+
+Opção B — Pipeline completo (all-in-one, em R):
+  Rscript cap7_agro_all_in_one.R
+
+Opção C — Integração Python↔R:
+  # Relatório rápido
+  python main.py --mode rapido
+
+  # Pipeline completo
+  python main.py --mode all
+  # ou atalho
+  python main.py --all-in-one
+
+  # CSV próprio → XLSX e rodar rápido
+  python main.py --from-csv meus_dados.csv --base base_agro.xlsx --mode rapido
+
+  # Definir saída e caminho do Rscript
+  python main.py --saida resultados --rscript "C:\Program Files\R\R-4.4.1\bin\Rscript.exe"
+
+Saídas:
+  • relatorios/estatisticas_*.csv
+  • relatorios/graficos/*.png
+  • relatorios/relatorio_agro.html
