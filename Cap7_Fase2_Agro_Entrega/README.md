@@ -17,11 +17,11 @@ FIAP - Faculdade de Informática e Administração Paulista
 
 ### Tutor(a)
 
-* [Nome do Tutor]
+* Sabrina Otoni
 
 ### Coordenador(a)
 
-* [Nome do Coordenador]
+* ANDRÉ GODOI CHIOVATO
 
 ## Descrição
 
