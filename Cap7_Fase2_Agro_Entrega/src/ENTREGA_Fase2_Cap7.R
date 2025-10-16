@@ -1,17 +1,24 @@
-
+# EvertonMarinhoSouza_RM568137_fase2_cap7
+# JuliaGutierresFernandesSouza_RM568296_fase2_cap7
+# MatheusRibeiroMartelletti_RM566767_fase2_cap7
+# RaimundaNayaraMendesdosSantos_RM567718_fase2_cap7
 # ================================================================
 # 📦 ENTREGA — Fase 2 | Capítulo 7
 # Projeto: Sistema de Análise de Dados do Agronegócio (arquivo único)
-# Autora: Raimunda Nayara Mendes dos Santos (RM: 567718)
+# Autores: 
+#   • Everton Marinho Souza (RM: 568137)
+#   • Julia Gutierres Fernandes Souza (RM: 568296)
+#   • Matheus Ribeiro Martelletti (RM: 566767)
+#   • Raimunda Nayara Mendes dos Santos (RM: 567718)
 # Instruções de uso:
 #   • Requisitos: R instalado (os pacotes serão instalados automaticamente)
-#   • Execução no R/RStudio: source("ENTREGA_Fase2_Cap7_Raimunda_Nayara_567718.R")
-#   • Execução via terminal: Rscript ENTREGA_Fase2_Cap7_Raimunda_Nayara_567718.R
+#   • Execução no R/RStudio: source("ENTREGA_Fase2_Cap7.R")
+#   • Execução via terminal: Rscript ENTREGA_Fase2_Cap7.R
 # Saídas geradas:
-#   • relatorios/estatisticas_geral.csv
-#   • relatorios/estatisticas_por_cultura.csv
-#   • relatorios/graficos/*.png
-#   • relatorios/relatorio_agro.html
+#   • document/relatorios/estatisticas_geral.csv
+#   • document/relatorios/estatisticas_por_cultura.csv
+#   • document/relatorios/graficos/*.png
+#   • document/relatorios/relatorio_agro.html
 # Observação: O script cria uma base sintética (base_agro.xlsx) se não existir.
 # ================================================================
 
@@ -21,12 +28,16 @@
 ensure_packages <- function(pkgs) {
   to_install <- pkgs[!pkgs %in% rownames(installed.packages())]
   if (length(to_install) > 0) {
-    message("Instalando pacotes: ", paste(to_install, collapse = ", "))
-    install.packages(to_install, repos = "https://cloud.r-project.org")
+    suppressMessages({
+      install.packages(to_install, repos = "https://cloud.r-project.org", quiet = TRUE)
+    })
   }
-  invisible(lapply(pkgs, require, character.only = TRUE))
+  invisible(suppressPackageStartupMessages({
+    lapply(pkgs, require, character.only = TRUE, quietly = TRUE)
+  }))
 }
 
+# Instalar e carregar pacotes necessários
 ensure_packages(c(
   "tidyverse","readxl","openxlsx","e1071","ggplot2",
   "rmarkdown","knitr","scales"
@@ -36,15 +47,19 @@ ensure_packages(c(
 # 1) Configurações do projeto
 # -------------------------------
 config <- list(
-  autora   = "Raimunda Nayara Mendes dos Santos",
-  rm       = "567718",
+  autores = list(
+    "Everton Marinho Souza" = "568137",
+    "Julia Gutierres Fernandes Souza" = "568296", 
+    "Matheus Ribeiro Martelletti" = "566767",
+    "Raimunda Nayara Mendes dos Santos" = "567718"
+  ),
   fase     = 2,
   capitulo = 7,
-  base_xlsx = "base_agro.xlsx",
-  saida_dir = "relatorios",
-  graficos_dir = file.path("relatorios","graficos"),
-  relatorio_rmd = file.path("relatorios","relatorio_agro.Rmd"),
-  relatorio_html = file.path("relatorios","relatorio_agro.html")
+  base_xlsx = "src/base_agro.xlsx",
+  saida_dir = "document/relatorios",
+  graficos_dir = file.path("document","relatorios","graficos"),
+  relatorio_rmd = file.path("document","relatorios","relatorio_agro.Rmd"),
+  relatorio_html = file.path("document","relatorios","relatorio_agro.html")
 )
 
 dir.create(config$saida_dir, showWarnings = FALSE, recursive = TRUE)
@@ -114,7 +129,6 @@ if (length(mensagens_validacao) > 0) {
 # -------------------------------
 # 4) Estatísticas descritivas
 # -------------------------------
-library(e1071)
 
 desc_geral <- dados |>
   dplyr::summarise(
@@ -146,10 +160,9 @@ readr::write_csv(desc_por_cultura, file.path(config$saida_dir, "estatisticas_por
 # -------------------------------
 # 5) Gráficos
 # -------------------------------
-library(ggplot2)
 
 p1 <- ggplot(dados, aes(x = Produtividade_t_ha)) +
-  geom_histogram(aes(y=..density..), bins = 12) +
+  geom_histogram(aes(y=after_stat(density)), bins = 12) +
   geom_density(linewidth = 1) +
   labs(title = "Produtividade (t/ha) — Histograma e Densidade",
        x = "t/ha", y = "Densidade")
@@ -187,7 +200,7 @@ ggsave(file.path(config$graficos_dir, "feijao_subtipos.png"), p4, width = 8, hei
 # -------------------------------
 rmd_conteudo <- '---
 title: "Relatório do Agronegócio — Capítulo 7"
-author: "Raimunda Nayara Mendes dos Santos (RM: 567718)"
+author: "Everton Marinho Souza (RM: 568137), Julia Gutierres Fernandes Souza (RM: 568296), Matheus Ribeiro Martelletti (RM: 566767), Raimunda Nayara Mendes dos Santos (RM: 567718)"
 date: "`r format(Sys.Date(), \"%d/%m/%Y\")`"
 output:
   html_document:
@@ -204,8 +217,8 @@ output:
 ## Estatísticas
 
 ```{r}
-desc_geral <- readr::read_csv("relatorios/estatisticas_geral.csv", show_col_types = FALSE)
-desc_por_cultura <- readr::read_csv("relatorios/estatisticas_por_cultura.csv", show_col_types = FALSE)
+desc_geral <- readr::read_csv("document/relatorios/estatisticas_geral.csv", show_col_types = FALSE)
+desc_por_cultura <- readr::read_csv("document/relatorios/estatisticas_por_cultura.csv", show_col_types = FALSE)
 
 desc_geral
 desc_por_cultura

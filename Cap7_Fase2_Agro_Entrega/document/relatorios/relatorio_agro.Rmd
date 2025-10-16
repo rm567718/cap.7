@@ -1,0 +1,40 @@
+---
+title: "Relatório do Agronegócio — Capítulo 7"
+author: "Everton Marinho Souza (RM: 568137), Julia Gutierres Fernandes Souza (RM: 568296), Matheus Ribeiro Martelletti (RM: 566767), Raimunda Nayara Mendes dos Santos (RM: 567718)"
+date: "`r format(Sys.Date(), "%d/%m/%Y")`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    theme: flatly
+    df_print: paged
+---
+
+## Visão Geral
+
+**Fase 2 — Capítulo 7.** Este relatório apresenta validação, estatísticas descritivas e visualizações de produtividade agrícola (CONAB/IBGE como referência).
+
+## Estatísticas
+
+```{r}
+desc_geral <- readr::read_csv("document/relatorios/estatisticas_geral.csv", show_col_types = FALSE)
+desc_por_cultura <- readr::read_csv("document/relatorios/estatisticas_por_cultura.csv", show_col_types = FALSE)
+
+desc_geral
+desc_por_cultura
+```
+
+## Gráficos
+
+### Histograma + Densidade
+![](graficos/hist_densidade.png)
+
+### Produtividade por Cultura
+![](graficos/boxplot_cultura.png)
+
+### Frequências por Cultura (com proporções)
+![](graficos/frequencias_cultura.png)
+
+### Feijão — Subtipos (média)
+![](graficos/feijao_subtipos.png)
+
