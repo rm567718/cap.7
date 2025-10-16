@@ -2,6 +2,8 @@
 # JuliaGutierresFernandesSouza_RM568296_fase2_cap7
 # MatheusRibeiroMartelletti_RM566767_fase2_cap7
 # RaimundaNayaraMendesdosSantos_RM567718_fase2_cap7
+# GitHub do Projeto:
+#  https://github.com/rm567718/cap.7/tree/main/Cap7_Fase2_Agro_Entrega
 # ================================================================
 # 📦 ENTREGA — Fase 2 | Capítulo 7
 # Projeto: Sistema de Análise de Dados do Agronegócio (arquivo único)
